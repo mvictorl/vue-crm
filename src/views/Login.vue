@@ -23,23 +23,31 @@
         >
           Введите корректный e-mail
         </small>
-
       </div>
+
       <div class="input-field">
         <input 
           id="password" 
           type="password" 
-          class="validate" />
+          v-model.trim="password"
+          :class="{invalid: ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength)}"
+        />
         <label for="password">Пароль</label>
         
         <small 
           class="helper-text invalid"
-
+          v-if="$v.password.$dirty && !$v.password.required"
         >
-          Password        
+          Данное поле не может быть пустым        
         </small>
-
+        <small 
+          class="helper-text invalid"
+          v-else-if="$v.password.$dirty && !$v.password.minLength"
+        >
+          Пароль короче допустимого значения: {{password.length}}/{{$v.password.$params.minLength.min}} символов
+        </small>
       </div>
+
     </div>
     <div class="card-action">
       <div>
@@ -59,6 +67,7 @@
 
 <script>
 import {email, required, minLength} from 'vuelidate/lib/validators';
+import messages from '@/utils/messages';
 
 export default {
   name: 'login',
@@ -70,12 +79,25 @@ export default {
     email: {required, email},
     password: {required, minLength: minLength(6)}
   },
+  mounted() {
+    if (messages[this.$route.query.message]) {
+      this.$message(messages[this.$route.query.message])
+    }
+  },
   methods: {
     submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
       }
+
+      const formData = {
+        email: this.email,
+        password: this.password
+      }
+      // TODO: удалить следующую строку
+      console.log(formData);      
+
       this.$router.push('/');
     }
   }
