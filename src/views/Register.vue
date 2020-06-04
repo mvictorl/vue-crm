@@ -2,23 +2,27 @@
   <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
-      
+
       <div class="input-field">
-        <input 
-          id="email" 
+        <input
+          id="email"
           type="text"
           v-model.trim="email"
-          :class="{invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)}"
+          :class="{
+            invalid:
+              ($v.email.$dirty && !$v.email.required) ||
+              ($v.email.$dirty && !$v.email.email)
+          }"
         />
         <label for="email">Email</label>
-        
-        <small 
+
+        <small
           class="helper-text invalid"
           v-if="$v.email.$dirty && !$v.email.required"
         >
           Данное поле не может быть пустым
         </small>
-        <small 
+        <small
           class="helper-text invalid"
           v-else-if="$v.email.$dirty && !$v.email.email"
         >
@@ -27,41 +31,48 @@
       </div>
 
       <div class="input-field">
-        <input 
-          id="password" 
-          type="password" 
+        <input
+          id="password"
+          type="password"
           v-model.trim="password"
-          :class="{invalid: ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength)}"
+          :class="{
+            invalid:
+              ($v.password.$dirty && !$v.password.required) ||
+              ($v.password.$dirty && !$v.password.minLength)
+          }"
         />
         <label for="password">Пароль</label>
-        
-        <small 
+
+        <small
           class="helper-text invalid"
           v-if="$v.password.$dirty && !$v.password.required"
         >
-          Данное поле не может быть пустым        
+          Данное поле не может быть пустым
         </small>
-        <small 
+        <small
           class="helper-text invalid"
           v-else-if="$v.password.$dirty && !$v.password.minLength"
         >
-          Пароль короче допустимого значения: {{password.length}}/{{$v.password.$params.minLength.min}} символов
+          Пароль короче допустимого значения: {{ password.length }}/{{
+            $v.password.$params.minLength.min
+          }}
+          символов
         </small>
       </div>
 
       <div class="input-field">
-        <input 
-          id="name" 
-          type="text" 
+        <input
+          id="name"
+          type="text"
           v-model.trim="name"
-          :class="{invalid: ($v.name.$dirty && !$v.name.required)}" 
+          :class="{ invalid: $v.name.$dirty && !$v.name.required }"
         />
         <label for="name">Имя</label>
-        <small 
+        <small
           class="helper-text invalid"
           v-if="$v.name.$dirty && !$v.name.required"
         >
-          Данное поле не может быть пустым        
+          Данное поле не может быть пустым
         </small>
       </div>
 
@@ -89,21 +100,21 @@
 </template>
 
 <script>
-import {email, required, minLength} from 'vuelidate/lib/validators';
+import { email, required, minLength } from "vuelidate/lib/validators";
 
 export default {
-  name: 'register',
+  name: "Register",
   data: () => ({
-    email: '',
-    password: '',
-    name: '',
+    email: "",
+    password: "",
+    name: "",
     agree: false
   }),
   validations: {
-    email: {required, email},
-    password: {required, minLength: minLength(6)},
-    name: {required},
-    agree: {cheched: v => v}
+    email: { required, email },
+    password: { required, minLength: minLength(6) },
+    name: { required },
+    agree: { cheched: v => v }
   },
   methods: {
     submitHandler() {
@@ -115,13 +126,13 @@ export default {
       const formData = {
         email: this.email,
         password: this.password,
-        name: this.name,
-      }
+        name: this.name
+      };
       // TODO: удалить следующую строку
-      console.log(formData);      
+      console.log(formData);
 
-      this.$router.push('/');
+      this.$router.push("/");
     }
   }
-}
+};
 </script>

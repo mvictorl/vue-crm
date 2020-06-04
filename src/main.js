@@ -5,9 +5,9 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 
-import firebasw from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/dist';
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 import dateFilter from "@/filters/date.filter";
 import messagePlugin from "@/utils/message.plugin";
@@ -32,8 +32,14 @@ firebase.initializeApp({
   appId: "1:727202270713:web:644b7bde5948ccf4d44128"
 });
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+let app = null;
+// Инициализирует объект Vue с данными об авторизации пользователя или без них
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    app = new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount("#app");
+  }
+});

@@ -3,21 +3,25 @@
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
       <div class="input-field">
-        <input 
-          id="email" 
+        <input
+          id="email"
           type="text"
           v-model.trim="email"
-          :class="{invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)}"
+          :class="{
+            invalid:
+              ($v.email.$dirty && !$v.email.required) ||
+              ($v.email.$dirty && !$v.email.email)
+          }"
         />
         <label for="email">Email</label>
-        
-        <small 
+
+        <small
           class="helper-text invalid"
           v-if="$v.email.$dirty && !$v.email.required"
         >
           Данное поле не может быть пустым
         </small>
-        <small 
+        <small
           class="helper-text invalid"
           v-else-if="$v.email.$dirty && !$v.email.email"
         >
@@ -26,28 +30,34 @@
       </div>
 
       <div class="input-field">
-        <input 
-          id="password" 
-          type="password" 
+        <input
+          id="password"
+          type="password"
           v-model.trim="password"
-          :class="{invalid: ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength)}"
+          :class="{
+            invalid:
+              ($v.password.$dirty && !$v.password.required) ||
+              ($v.password.$dirty && !$v.password.minLength)
+          }"
         />
         <label for="password">Пароль</label>
-        
-        <small 
+
+        <small
           class="helper-text invalid"
           v-if="$v.password.$dirty && !$v.password.required"
         >
-          Данное поле не может быть пустым        
+          Данное поле не может быть пустым
         </small>
-        <small 
+        <small
           class="helper-text invalid"
           v-else-if="$v.password.$dirty && !$v.password.minLength"
         >
-          Пароль короче допустимого значения: {{password.length}}/{{$v.password.$params.minLength.min}} символов
+          Пароль короче допустимого значения: {{ password.length }}/{{
+            $v.password.$params.minLength.min
+          }}
+          символов
         </small>
       </div>
-
     </div>
     <div class="card-action">
       <div>
@@ -66,26 +76,26 @@
 </template>
 
 <script>
-import {email, required, minLength} from 'vuelidate/lib/validators';
-import messages from '@/utils/messages';
+import { email, required, minLength } from "vuelidate/lib/validators";
+import messages from "@/utils/messages";
 
 export default {
-  name: 'login',
+  name: "Login",
   data: () => ({
-    email: '',
-    password: ''
+    email: "",
+    password: ""
   }),
   validations: {
-    email: {required, email},
-    password: {required, minLength: minLength(6)}
+    email: { required, email },
+    password: { required, minLength: minLength(6) }
   },
   mounted() {
     if (messages[this.$route.query.message]) {
-      this.$message(messages[this.$route.query.message])
+      this.$message(messages[this.$route.query.message]);
     }
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
@@ -94,12 +104,13 @@ export default {
       const formData = {
         email: this.email,
         password: this.password
-      }
-      // TODO: удалить следующую строку
-      console.log(formData);      
+      };
 
-      this.$router.push('/');
+      try {
+        await this.$store.dispatch("login", formData);
+        this.$router.push("/");
+      } catch (e) {}
     }
   }
-}
+};
 </script>

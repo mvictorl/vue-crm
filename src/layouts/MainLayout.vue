@@ -23,7 +23,7 @@ import Navbar from "@/components/app/Navbar";
 import Sidebar from "@/components/app/Sidebar";
 
 export default {
-  name: "main-layout",
+  name: "MainLayout",
   data: () => ({
     isOpen: true
   }),
