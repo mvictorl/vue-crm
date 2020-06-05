@@ -117,7 +117,7 @@ export default {
     agree: { cheched: v => v }
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
@@ -128,10 +128,11 @@ export default {
         password: this.password,
         name: this.name
       };
-      // TODO: удалить следующую строку
-      console.log(formData);
-
-      this.$router.push("/");
+      
+      try {
+        await this.$store.dispatch('register', formData);
+        this.$router.push("/");
+      } catch (e) {}
     }
   }
 };
