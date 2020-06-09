@@ -16,7 +16,7 @@
             data-target="dropdown"
             ref="dropDown"
           >
-            USER NAME
+            {{name}}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -52,13 +52,18 @@ export default {
       this.$router.push("/login?message=logout");
     }
   },
+  computed: {
+    name() {
+      return this.$store.getters.info.name;
+    }
+  },
   mounted() {
-    this.dropdown = window.M.Dropdown.init(this.$refs.dropDown, {
-      constrainWidth: true
-    });
     this.interval = setInterval(() => {
       this.date = new Date();
-    }, 1000);
+    }, 1000)
+    this.dropdown = window.M.Dropdown.init(this.$refs.dropDown, {
+      constrainWidth: true
+    })    
   },
   beforeDestroy() {
     clearInterval(this.interval);
