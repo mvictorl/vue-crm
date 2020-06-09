@@ -99,7 +99,7 @@ export default {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
-      }
+      };
 
       const formData = {
         email: this.email,
