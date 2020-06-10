@@ -10,7 +10,9 @@ import "firebase/auth";
 import "firebase/database";
 
 import dateFilter from "@/filters/date.filter";
+import currencyFilter from "@/filters/currency.filter";
 import messagePlugin from "@/utils/message.plugin";
+import Loader from "@/components/app/Loader"
 
 import "materialize-css/dist/js/materialize.min";
 
@@ -20,6 +22,9 @@ Vue.use(Vuelidate);
 Vue.use(messagePlugin);
 
 Vue.filter("dateFilter", dateFilter);
+Vue.filter("currencyFilter", currencyFilter);
+
+Vue.component('Loader', Loader);
 
 // Initialize Firebase
 firebase.initializeApp({
