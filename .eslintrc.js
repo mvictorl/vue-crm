@@ -8,13 +8,13 @@ module.exports = {
   extends: ["plugin:vue/essential", "eslint:recommended", "@vue/prettier"],
 
   parserOptions: {
-    parser: "babel-eslint"
+    parser: 'babel-eslint'
   },
 
   rules: {
-    "no-console": "off",
-    "no-debugger": "off",
-    "vue/no-unused-vars": "warn"
+    'no-console': 'off',
+    'no-debugger': 'off',
+    'vue/no-unused-vars': 'warn'
   },
 
   extends: [
@@ -27,5 +27,11 @@ module.exports = {
     "plugin:vue/strongly-recommended",
     "eslint:recommended",
     "@vue/prettier"
+  ],
+
+  'extends': [
+    'plugin:vue/essential',
+    'eslint:recommended',
+    '@vue/prettier'
   ]
 };

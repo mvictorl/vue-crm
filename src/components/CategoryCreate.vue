@@ -70,13 +70,13 @@ export default {
           title: this.title,
           limit: this.limit,
         });
-        this.title = '';
+        this.title = "";
         this.limit = 1;
         this.$v.$reset();
-        this.$message('Категория была успешно создана');
-        this.$emit('created', category);
+        this.$message("Категория была успешно создана");
+        this.$emit("created", category);
       } catch (e) {}
-    },
+    }
   },
   validations: {
     title: { required },
